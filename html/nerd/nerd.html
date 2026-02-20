@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Erins Blog</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <!-- Menus -->
+  <div id="header-placeholder"></div>
+  <script>
+    fetch('/html/header.html')
+      .then(r => r.text())
+      .then(html => {
+        document.getElementById('header-placeholder').innerHTML = html;
+      });
+  </script>
+  <script src="/js/script.js"></script>
+
+  <!-- Page Content -->
+  <div class="content">
+    <div class="row">
+      <div class="text">
+        <p>I'm gonna put some actual stuff here eventually dont worry</p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+      <div class="text">
+        <h1><a href="/html/nerd/lambda-calculus.html">The Lambda Calculus</a></h1>
+        <p>What it is, why its cool, what comes next</p>
+      </div>
+    </div>
+</body>
+</html>

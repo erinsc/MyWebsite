@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Erins Blog</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <!-- Menus -->
+  <div id="header-placeholder"></div>
+  <script>
+    fetch('/html/header.html')
+      .then(r => r.text())
+      .then(html => {
+        document.getElementById('header-placeholder').innerHTML = html;
+      });
+  </script>
+  <script src="/js/script.js"></script>
+
+  <!-- Page Content -->
+  <div class="content">
+    <div class="row" style="--accent: darkorange">
+      <div class="text">
+        <p>Welcome! this is my page now, ill be adding a bunch of crap here when i feel like it, enjoy!</p>
+      </div>
+      <div class="image">
+        <img src="/data/pfp.png" alt="Young woman, long hair in a ponytail, happy smile">
+      </div>
+    </div>
+  </div>
+</body>
+</html>

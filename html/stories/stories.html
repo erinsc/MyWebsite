@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Erins Blog</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <!-- Menus -->
+  <div id="header-placeholder"></div>
+  <script>
+    fetch('/html/header.html')
+      .then(r => r.text())
+      .then(html => {
+        document.getElementById('header-placeholder').innerHTML = html;
+      });
+  </script>
+  <script src="/js/script.js"></script>
+
+  <!-- Page Content -->
+  <div class="content">
+    <div class="row" style="--accent: orange">
+      <div class="text">
+        <h3>A collection of stories, worldbuilding ideas, basically anything i had on my mind that i thought was cool. Enjoy!</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="text">
+        <h2><a href="/html/stories/ember.html">Ember</a></h2>
+        <p>A sequence of images along with a short story about a girl living in the near future (setting significantly inspired by the Expanse and Planetes tee hee)</p>
+      </div>
+      <div class="image">
+        <img src="/data/ember/ember 23.png" alt="Young woman, long fluffy hair, happy smile">
+      </div>
+    </div>
+  </div>
+</body>
+</html>
