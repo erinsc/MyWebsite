@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Erins Blog</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <!-- Menus -->
+  <div id="header-placeholder"></div>
+  <script>
+    fetch('/html/header.html')
+      .then(r => r.text())
+      .then(html => {
+        document.getElementById('header-placeholder').innerHTML = html;
+      });
+  </script>
+  <script src="/js/scripts.js"></script>
+
+  <!-- Page Content -->
+  <div class="content">
+    <div class="paragraph" style="--accent: orange">
+      <h2>On the Study of Lunarite, as written by Galavani Mia</h2>
+    </div>
+    <div class="paragraph">
+      <div class="row">
+        <div class="text">
+            <h3>Early History</h3>
+            <p>An extra-solar body crashed into the moon at a high angle, altering its orbit around the earth and shattering its surface, and changing its composition through an unknown process. Among other things, it glows bright blue when exposed to sunlight, has a phosphoric effect, and its able to store, and release the solar energy to change the world around it. Remnants of the impact, mostly composed of a mineral dubbed Lunarite, have rained down on earth largely unscathed by atmospheric reentry. Today many large veins of the material are still regularly found with depth surveying.</p>
+
+            <p>Early societies have already known about Lunarites incredible properties, but deemed them dangerous and sacrilegious. Only known use of the material from this age are so called "magic circles", which were mostly used for creating barriers and effect areas. users of magic circles were called "witches", and because of persecution not many records survived. However the basic mechanisms are known.</p>
+
+            <p>Witches would venture into shallow caves with chisels and take samples of rock, then bringing it up to the surface and checking if the sample contained Lunarite. if so, they would mine a suitable amount of it and bring it up. The rock was ground coarsely, then spread on wooden sheets in open spaces to let it absorb as much sunlight as possible. The charged gravel was then spread roughly around an object that was to be protected, and a chosen glyph started the reaction. depending on the spacing of the gravel, the areas effect could be made stronger, at the cost of a shorter reaction time.</p>
+        </div>
+      </div>
+    </div>
+    <div class="paragraph">
+      <div class="row">
+        <div class="text">
+            <h3>Developement as a Science</h3>
+            <p>During the Igleic era, Emperor Igleis IV helped get rid of most of the stigmatisation around Lunarite by creating an official study program for the material, to be used in medicine. Her main goal was finding a cure for immortality, and while she didn't achieve it, the program eventually led to a new age of prosperity. One of the main advancements was the study of glyphs and their effects. Until then most glyphs were found by trial and error, which limited their scope and use-case significantly. By this point however more than a thousand patterns were documented and organized.</p>
+
+            <p>With more modern technology, lunarite could be ground into fine sands and spread out into smaller patterns which acted over short time periods, often on the scale of minutes or hours, as opposed to days and weeks as before. This allowed the discovery and use of more potent spells for actions such as healing and purification.</p>
+        </div>
+      </div>
+    </div>
+    <div class="paragraph" style="--accent: greenyellow">
+      <div class="row">
+        <div class="text">
+            <h3>Modern Principles</h3>
+            <p>Under construction lol, come back later :3</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

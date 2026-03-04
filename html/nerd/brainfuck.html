@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Erins Blog</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/brainfuck.css">
+</head>
+<body>
+
+  <!-- Menus -->
+  <div id="header-placeholder"></div>
+  <script>
+    fetch('/html/header.html')
+      .then(r => r.text())
+      .then(html => {
+        document.getElementById('header-placeholder').innerHTML = html;
+      });
+  </script>
+  <script src="/js/scripts.js"></script>
+
+  <!-- Page Content -->
+  <div class="content">
+    <div class="paragraph" style="--accent: orange">
+      <h2>Online brainfuck interpreter and visualizer</h2>
+      <p>This page is still a work in progress, i want to add a description of the language, also the input box is fucky right now. come back later lol</p>
+    </div>
+    <div class="paragraph">
+      <h2>Program</h2>
+      <div class="bf-editor-wrap">
+        <div id="BfHighlight" aria-hidden="true"></div>
+        <textarea id="ProgramTextbox" spellcheck="false" placeholder="...">++++++++
+[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]
+>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.</textarea>
+      </div>
+      <h2>Input</h2>
+      <textarea id="InputTextbox" spellcheck="false" placeholder="..."></textarea>
+    </div>
+
+    <div class="paragraph">
+      <div class="buttons">
+        <button id="BtnStart">Start</button>
+        <button id="BtnStep">Step</button>
+        <button id="BtnOptimise">Optimise</button>
+      </div>
+      <div class="bf-speed-row">
+        <label for="SpeedSlider">Step delay</label>
+        <input type="range" id="SpeedSlider" min="0" max="100" value="100" step="1">
+        <span id="SpeedLabel">100ms</span>
+      </div>
+      <div class="bf-tape-wrapper">
+        <div class="bf-tape-track" id="BfTape"></div>
+      </div>
+      <div class="bf-info-row">
+        <span class="bf-info-label">Steps</span><span class="bf-info-val" id="BfSteps">0</span>
+      </div>
+    </div>
+
+    <div class="paragraph">
+      <h2>Output</h2>
+      <textarea id="OutputTextbox" spellcheck="false" placeholder="..." readonly></textarea>
+    </div>
+
+  </div>
+
+  <script src="/js/brainfuck.js"></script>
+</body>
+</html>

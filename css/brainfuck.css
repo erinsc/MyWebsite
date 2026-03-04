@@ -1,0 +1,207 @@
+#BtnOptimise.on {
+  background: darkorange;
+  color: white;
+}
+
+#BtnOptimise.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+#BtnStart.running {
+  background: orangered;
+  color: white;
+}
+.bf-editor-wrap {
+  position: relative;
+  width: 100%;
+}
+button {
+  min-width: 200px;
+}
+
+#BfHighlight {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 20px;
+  line-height: 1.6;
+  padding: 5px;
+  border: 2px solid transparent; /* same width as textarea border */
+
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow: hidden;
+
+  pointer-events: none;
+  color: transparent;
+  background: transparent;
+  z-index: 2;
+
+  box-sizing: border-box;
+}
+.hl-current {
+  outline: 2px solid darkorange;
+}
+
+.hl-bracket {
+  outline: 2px solid orangered;
+}
+
+/* --- Tape --- */
+.bf-tape-wrapper {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 108px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid black;
+}
+.bf-tape-wrapper::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -32%);
+  width: 65px;
+  height: 65px;
+  border: 3px solid black;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.bf-tape-track {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+/* Wrapper holds the index label + the cell box */
+.bf-cell-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.bf-cell-index {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 15px;
+  color: #444;
+  line-height: 1;
+  min-width: 55px;
+  text-align: center;
+  user-select: none;
+}
+
+.bf-cell {
+  width: 55px;
+  height: 55px;
+  flex-shrink: 0;
+  border: 2px solid #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 25px;
+  color: #222;
+  background: white;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.bf-cell.flash {
+  animation: bf-flash 0.35s ease-out;
+}
+
+@keyframes bf-flash {
+  0%   { background: darkorange; color: white; border-color: darkorange; }
+  100% { background: white; }
+}
+
+/* --- Input textbox --- */
+#InputTextbox {
+  min-height: 40px;
+  overflow: hidden;
+}
+
+#InputTextbox.input-exhausted {
+  border-color: orangered;
+  background: rgba(255, 69, 0, 0.06);
+  outline: none;
+}
+
+/* --- Speed slider --- */
+.bf-speed-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+  font-size: 16px;
+  color: #222;
+  padding: 5px;
+}
+
+.bf-speed-row label {
+  font-weight: bold;
+}
+
+#SpeedLabel {
+  font-family: 'Share Tech Mono', monospace;
+}
+
+#SpeedSlider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 180px;
+  height: 6px;
+  border-radius: 3px;
+  background: #ccc;
+  outline: none;
+  cursor: pointer;
+}
+
+#SpeedSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 0%;
+  background: #ccc;
+  cursor: pointer;
+  border: 2px solid black;
+}
+
+#SpeedSlider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 0%;
+  background: #ccc;
+  cursor: pointer;
+  border: 2px solid black;
+}
+
+/* --- Info row --- */
+.bf-info-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  font-size: 16px;
+  color: #222;
+}
+
+.bf-info-label {
+  font-weight: bold;
+  color: #222;
+}
+
+.bf-info-val {
+  font-family: 'Share Tech Mono', monospace;
+  color: #222;
+}

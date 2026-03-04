@@ -1,4 +1,4 @@
 function toggleMenu() {
-    const menu = document.getElementById("sideMenu");
+    const menu = document.getElementById("SideBar");
     menu.classList.toggle("active");
 }
