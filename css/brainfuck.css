@@ -11,15 +11,18 @@
   background: orangered;
   color: white;
 }
-.bf-editor-wrap {
+.highlight-wrap {
   position: relative;
   width: 100%;
 }
+
 button {
   min-width: 200px;
 }
-
-#BfHighlight {
+textarea {
+  overflow: hidden;
+}
+highlight {
   position: absolute;
   inset: 0;
   margin: 0;
@@ -59,19 +62,6 @@ button {
   justify-content: center;
   border: 2px solid black;
 }
-.bf-tape-wrapper::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -32%);
-  width: 65px;
-  height: 65px;
-  border: 3px solid black;
-  z-index: 10;
-  pointer-events: none;
-}
-
 .bf-tape-track {
   display: flex;
   gap: 5px;
@@ -85,7 +75,7 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
 }
 
 .bf-cell-index {
@@ -113,22 +103,23 @@ button {
   transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
 
+.pointer {
+  width: 69px;
+  height: 69px;
+  margin: -7px -10px;
+  border: 5px solid #222;
+}
+
 .bf-cell.flash {
   animation: bf-flash 0.35s ease-out;
 }
 
 @keyframes bf-flash {
-  0%   { background: darkorange; color: white; border-color: darkorange; }
+  0%   { background: darkorange; color: white; }
   100% { background: white; }
 }
 
-/* --- Input textbox --- */
-#InputTextbox {
-  min-height: 40px;
-  overflow: hidden;
-}
-
-#InputTextbox.input-exhausted {
+.input-exhausted {
   border-color: orangered;
   background: rgba(255, 69, 0, 0.06);
   outline: none;

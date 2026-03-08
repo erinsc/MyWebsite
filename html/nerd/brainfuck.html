@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="stylesheet" href="/css/brainfuck.css">
 </head>
+
 <body>
 
   <!-- Menus -->
@@ -24,18 +26,20 @@
   <div class="content">
     <div class="paragraph" style="--accent: orange">
       <h2>Online brainfuck interpreter and visualizer</h2>
-      <p>This page is still a work in progress, i want to add a description of the language, also the input box is fucky right now. come back later lol</p>
     </div>
     <div class="paragraph">
       <h2>Program</h2>
-      <div class="bf-editor-wrap">
-        <div id="BfHighlight" aria-hidden="true"></div>
-        <textarea id="ProgramTextbox" spellcheck="false" placeholder="...">++++++++
-[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]
->>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.</textarea>
+      <div class="highlight-wrap">
+        <highlight id="ProgramHighlight" aria-hidden="true"></highlight>
+        <textarea id="ProgramBox" spellcheck="false" placeholder="...">++++++++
+[&gt;++++[&gt;++&gt;+++&gt;+++&gt;+&lt;&lt;&lt;&lt;-]&gt;+&gt;+&gt;-&gt;&gt;+[&lt;]&lt;-]
+&gt;&gt;.&gt;---.+++++++..+++.&gt;&gt;.&lt;-.&lt;.+++.------.--------.&gt;&gt;+.&gt;++.</textarea>
       </div>
       <h2>Input</h2>
-      <textarea id="InputTextbox" spellcheck="false" placeholder="..."></textarea>
+      <div class="highlight-wrap">
+        <highlight id="InputHighlight" aria-hidden="true"></highlight>
+        <textarea id="InputBox" spellcheck="false" placeholder="..."></textarea>
+      </div>
     </div>
 
     <div class="paragraph">
@@ -53,17 +57,71 @@
         <div class="bf-tape-track" id="BfTape"></div>
       </div>
       <div class="bf-info-row">
-        <span class="bf-info-label">Steps</span><span class="bf-info-val" id="BfSteps">0</span>
+        <span class="bf-info-label">Steps</span><span class="bf-info-val" id="StepsLabel">0</span>
       </div>
     </div>
 
     <div class="paragraph">
       <h2>Output</h2>
-      <textarea id="OutputTextbox" spellcheck="false" placeholder="..." readonly></textarea>
+      <textarea id="OutputBox" spellcheck="false" placeholder="..." readonly></textarea>
     </div>
+    <div class="paragraph" style="--accent: greenyellow">
+      <h2>What even is brainfuck?</h2>
+      <p>Brainfuck is a so called "esoteric programming language". It's not meant to be actually used by people to write
+        code because its too complicated and hard to work with. But that won't stop you of course!</p>
+      <p>Let's start with the basics. The brainfuck memory is made up or 30000 cells, each one can hold an integer
+        number between 0 and 255 (inclusive). Theres a "Pointer" which looks at one cell from the memory.</p>
+      <p>There's 8 instructions (9 in my interpreter):</p>
 
+      <ul>
+        <li><span class="showcase">+</span> Increments the cell in the pointer by 1. If the cell is holding 255 it
+          "overflows" back to 0</li>
+        <li><span class="showcase">-</span> Decrements the cell in the pointer by 1. If the cell is holding 0 it
+          "underflows" back to 255</li>
+        <li><span class="showcase">&gt;</span> Moves the pointer 1 cell to the right. If there's no cells on the right
+          then you've probably messed up because you're using way too much memory</li>
+        <li><span class="showcase">&lt;</span> Moves the pointer 1 cell to the left. If there's no cells on the left the
+          program crashes</li>
+        <li><span class="showcase">[</span>If the cell in the pointer is <em>not</em>holding a 0, goes inside a loop
+        </li>
+        <li><span class="showcase">]</span> If the cell in the pointer <em>is</em> holding a 0, exit the loop, otherwise
+          repeat it
+        <li><span class="showcase">.</span> Print the cell in the pointer as an ASCII value</li>
+        <li><span class="showcase">.</span> Reads a character from the user and saves its value into the cell in the
+          pointer. If there's no more characters the program pauses </li>
+        <li><span class="showcase">!</span> Pauses the program (This one isn't in the original brainfuck specification)
+        </li>
+      </ul>
+
+      <p> If you're wondering how the heck someone could make anything in this then you've understood what "esoteric"
+        means lol, but it is possible. Nothing actually useful of course but you can find some incredible programs
+        online, for example a mandlebrot set printer! It's probably better to start simpler:</p>
+
+      <ul>
+        <li><span class="showcase">++++ ++++ ++</span>
+          This one adds 10 to a cell</li>
+        <li><span class="showcase">[-]</span> This one simply sets the value of a cell to 0, useful for cleaning up</li>
+        <li><span class="showcase">[-] ++++ ++++ ++</span> A combination of the previous two, it sets the cell to 10
+        </li>
+        <li><span class="showcase">[&lt;]</span> This one moves to the left until it finds an empty cell</li>
+        <li><span class="showcase">[&lt;] ++++ [- &gt; +++++ &lt;]</span> This one adds 20 to the cell to the right of
+          the pointer. It first sets a cell to 4, then repeats a loop until its empty. The loop subtracts 1 from the
+          cell, moves right, adds 5, moves back. Its pretty simple once you get it</li>
+        <li><span class="showcase">++++++++
+            [&gt;++++[&gt;++&gt;+++&gt;+++&gt;+<<<<-]&gt;+&gt;+&gt;-&gt;&gt;+[&lt;]&lt;-]
+              &gt;&gt;.&gt;---.+++++++..+++.&gt;&gt;.&lt;-.&lt;.+++.------.--------.&gt;&gt;+.&gt;++.</span>
+              A "Hello World" program is a staple of programming, it simply prints "Hello World!" to the user</li>
+        <li><span class="showcase">TODO</span> A calculator, kinda. It reads 2 digits from the user, adds them together
+          (it first needs to subtract 48, since an ASCII 5 is actually 53), adds them, then prints the result</li>
+        <li><span class="showcase">
+          &gt;&gt;,[&gt;&gt;,]&gt;+&lt;&lt;&lt;[&lt;&lt;]+&gt;&gt;-[+[-&gt;+&gt;-[&gt;]&lt;&lt;&lt;]&lt;[&gt;&gt; [-&gt;&gt;+&lt;&lt;]&lt;]&gt;&gt;[-&gt;+&lt;&lt;+&gt;]&gt;&gt;&gt;&gt;[&lt;&lt;+&lt;-[+&lt;&lt;-]+&gt;&gt;&gt;&gt;&gt;[&lt;&lt;]]&lt;&lt;&lt;-]&gt;&gt;[.&gt;&gt;]</span> 
+          A bublesort program. It reads as many characters from the user, sorts
+          them, then prints them back sorted. I made this one! very proud</li>
+      </ul>
+    </div>
   </div>
 
   <script src="/js/brainfuck.js"></script>
 </body>
+
 </html>

@@ -1,26 +1,30 @@
 const TAPE_SIZE     = 30000;
-const VISIBLE_CELLS = 21; // must be odd
+var VISIBLE_CELLS = 19; // must be odd
+let visibleOffset = 0;
 let STEP_INTERVAL   = 100;
-const BF_OPS = new Set(['+', '-', '>', '<', '[', ']', '.', ',']);
+const BF_OPS = new Set(['+', '-', '>', '<', '[', ']', '.', ',', '!']);
 const BF_OPT_OPS = new Set(['+', '-', '>', '<']);
 
 let tape;
 let tapePtr;
 let program;
 let programPtr;
+
+let inputPtr;
 let loopMap;
 let intervalHandle;
 let steps;
 
-const programInput = document.getElementById('ProgramTextbox');
-const inputBox     = document.getElementById('InputTextbox');
-const outputBox    = document.getElementById('OutputTextbox');
-const highlightEl  = document.getElementById('BfHighlight');
-const tapeTrack    = document.getElementById('BfTape');
-const btnStart     = document.getElementById('BtnStart');
-const btnStep      = document.getElementById('BtnStep');
-const btnOptimise  = document.getElementById('BtnOptimise');
-const elSteps      = document.getElementById('BfSteps');
+const programBox   = document.getElementById('ProgramBox');
+const inputBox     = document.getElementById('InputBox');
+const outputBox    = document.getElementById('OutputBox');
+const programHL    = document.getElementById('ProgramHighlight');
+const inputHL      = document.getElementById('InputHighlight');
+const tapeBox      = document.getElementById('BfTape');
+const startButton  = document.getElementById('BtnStart');
+const stepButton   = document.getElementById('BtnStep');
+const OptimButton  = document.getElementById('BtnOptimise');
+const stepsLabel   = document.getElementById('StepsLabel');
 const speedSlider  = document.getElementById('SpeedSlider');
 const speedLabel   = document.getElementById('SpeedLabel');
 
@@ -28,7 +32,7 @@ speedSlider.addEventListener('input', () => {
   STEP_INTERVAL = parseInt(speedSlider.value, 10);
   speedLabel.textContent = STEP_INTERVAL + 'ms';
 
-  if (btnStart.classList.contains("running")) {
+  if (startButton.classList.contains("running")) {
     clearInterval(intervalHandle);
     intervalHandle = setInterval(() => {
       if (!stepOnce())
@@ -36,10 +40,10 @@ speedSlider.addEventListener('input', () => {
     }, STEP_INTERVAL);
   }
 });
-
 // Copy styles of program textbox into highlight box so they align
 function syncHighlightStyles() {
-  const cs = window.getComputedStyle(programInput);
+  const cs = window.getComputedStyle(programBox);
+  const is = window.getComputedStyle(inputBox);
   const props = [
     'fontFamily', 'fontSize', 'fontWeight', 'fontStyle', 'fontVariant',
     'lineHeight', 'letterSpacing', 'wordSpacing',
@@ -51,24 +55,38 @@ function syncHighlightStyles() {
     'tabSize',
   ];
   for (const prop of props) {
-    highlightEl.style[prop] = cs[prop];
+    programHL.style[prop] = cs[prop];
+    inputHL.style[prop] = is[prop];
   }
-  highlightEl.style.borderStyle = 'solid';
-  highlightEl.style.borderColor = 'transparent';
-  highlightEl.style.background  = 'transparent';
-  highlightEl.style.color       = 'transparent';
-  highlightEl.style.whiteSpace  = 'pre-wrap';
-  highlightEl.style.overflow    = 'hidden';
-  highlightEl.style.position    = 'absolute';
-  highlightEl.style.top         = '0';
-  highlightEl.style.left        = '0';
-  highlightEl.style.height      = '100%';
-  highlightEl.style.pointerEvents = 'none';
-  highlightEl.style.zIndex      = '2';
+  programHL.style.borderStyle = 'solid';
+  programHL.style.borderColor = 'transparent';
+  programHL.style.background  = 'transparent';
+  programHL.style.color       = 'transparent';
+  programHL.style.whiteSpace  = 'pre-wrap';
+  programHL.style.overflow    = 'hidden';
+  programHL.style.position    = 'absolute';
+  programHL.style.top         = '0';
+  programHL.style.left        = '0';
+  programHL.style.height      = '100%';
+  programHL.style.pointerEvents = 'none';
+  programHL.style.zIndex      = '2';
+  
+  inputHL.style.borderStyle = 'solid';
+  inputHL.style.borderColor = 'transparent';
+  inputHL.style.background  = 'transparent';
+  inputHL.style.color       = 'transparent';
+  inputHL.style.whiteSpace  = 'pre-wrap';
+  inputHL.style.overflow    = 'hidden';
+  inputHL.style.position    = 'absolute';
+  inputHL.style.top         = '0';
+  inputHL.style.left        = '0';
+  inputHL.style.height      = '100%';
+  inputHL.style.pointerEvents = 'none';
+  inputHL.style.zIndex      = '2';
 }
 
 syncHighlightStyles();
-new ResizeObserver(syncHighlightStyles).observe(programInput);
+new ResizeObserver(syncHighlightStyles).observe(programBox);
 
 const cellEls = [];
 for (let i = 0; i < VISIBLE_CELLS; i++) {
@@ -86,13 +104,13 @@ for (let i = 0; i < VISIBLE_CELLS; i++) {
   wrapper.appendChild(idx);
   wrapper.appendChild(el);
 
-  tapeTrack.appendChild(wrapper);
+  tapeBox.appendChild(wrapper);
   cellEls.push({ el, idx, wrapper });
 }
 
-btnOptimise.addEventListener('click', () => {
-  if (btnOptimise.classList.contains('disabled')) return;
-  btnOptimise.classList.toggle('on');
+OptimButton.addEventListener('click', () => {
+  if (OptimButton.classList.contains('disabled')) return;
+  OptimButton.classList.toggle('on');
 });
 
 function buildLoopMap(instrs) {
@@ -122,7 +140,7 @@ function compile(prog) {
       do {
         delta += 1;
         i++;
-      } while (btnOptimise.classList.contains('on') && i < prog.length && (prog[i] === ch));
+      } while (OptimButton.classList.contains('on') && i < prog.length && (prog[i] === ch));
 
       instrs.push({ type: ch, delta, srcStart: start, srcEnd: i - 1 });
     } 
@@ -141,7 +159,7 @@ function compile(prog) {
 
 function endState() {
   clearInterval(intervalHandle);
-  btnStart.textContent = 'Reset';
+  startButton.textContent = 'Reset';
 }
 
 function resetState() {
@@ -150,21 +168,21 @@ function resetState() {
   tape = new Uint8Array(TAPE_SIZE);
   tapePtr = 0;
   steps = 0;
-  program = compile(programInput.value);
+  program = compile(programBox.value);
   programPtr = 0; 
-
+  inputPtr = 0
+  visibleOffset = 0;
 
   loopMap = buildLoopMap(program);
   inputBox.classList.remove('input-exhausted');
   renderTape();
   clearHighlight();
   outputBox.value     = '';
-  elSteps.textContent = '0';
-  btnStart.textContent = 'Start';
-  btnStart.classList.remove('running');
-  btnOptimise.classList.remove('disabled');
-  programInput.disabled = false;
-  inputBox.disabled = false;
+  stepsLabel.textContent = '0';
+  startButton.textContent = 'Start';
+  startButton.classList.remove('running');
+  OptimButton.classList.remove('disabled');
+  programBox.disabled = false;
 }
 
 // ---- Highlight overlay ----
@@ -173,75 +191,83 @@ function escHtml(s) {
 }
 
 function clearHighlight() {
-  highlightEl.innerHTML = '';
+  programHL.innerHTML = '';
+  inputHL.innerHTML = '';
 }
 
 function applyHighlight() {
-  if (programPtr >= program.length) return null;
+  if (programPtr >= program.length) 
+    return null;
   const instr = program[programPtr];
   var ranges = [{ start: instr.srcStart, end: instr.srcEnd, cls: 'hl-current' }];
-  if (instr.type === '[' || instr.type === ']') {
+
+  if (instr.type === '[') {
     const mi = loopMap[programPtr];
-    if (mi !== undefined) {
-      const m = program[mi];
-      ranges.push({ start: m.srcStart, end: m.srcEnd, cls: 'hl-bracket' });
-    }
+    const m = program[mi];
+    ranges.push({ start: m.srcStart, end: m.srcEnd, cls: 'hl-bracket' });
+  }
+  else if (instr.type === ']') {
+    const mi = loopMap[programPtr];
+    const m = program[mi];
+    ranges.unshift({ start: m.srcStart, end: m.srcEnd, cls: 'hl-bracket' });
   }
 
-  console.log(ranges);
-  if (!ranges || !ranges.length) { clearHighlight(); return; }
-  const prog = programInput.value;
-  ranges = [...ranges].sort((a, b) => a.start - b.start);
+  const prog = programBox.value;
   let html = '', cursor = 0;
   for (const r of ranges) {
-    if (r.start > cursor) html += escHtml(prog.slice(cursor, r.start));
+    html += escHtml(prog.slice(cursor, r.start));
     html += `<span class="${r.cls}">${escHtml(prog.slice(r.start, r.end + 1))}</span>`;
     cursor = r.end + 1;
   }
-  if (cursor < prog.length) html += escHtml(prog.slice(cursor));
-  highlightEl.innerHTML = html;
-  highlightEl.scrollTop = programInput.scrollTop;
+  html += escHtml(prog.slice(cursor));
+  programHL.innerHTML = html;
+  programHL.scrollTop = programBox.scrollTop;
 }
 
 // ---- Tape rendering ----
 function renderTape(flashDp = false) {
-  const half = Math.floor(VISIBLE_CELLS / 2);
+  visibleOffset = Math.min(tapePtr, Math.max(visibleOffset, tapePtr - VISIBLE_CELLS + 1));
+
   for (let i = 0; i < VISIBLE_CELLS; i++) {
-    const ti = tapePtr - half + i;
+    const ti = visibleOffset + i;
     const { el, idx } = cellEls[i];
-    if (ti < 0 || ti >= TAPE_SIZE) {
-      el.textContent = '';
-      idx.textContent = '';
-      el.style.opacity = '0';
-      idx.style.opacity = '0';
-    } else {
-      el.style.opacity = '1';
-      idx.style.opacity = '1';
       idx.textContent = ti;
-      const val = tape[ti];
-      el.textContent = val;
-      el.classList.toggle('nonzero', val !== 0);
-      if (flashDp && i === half) {
-        el.classList.remove('flash');
+      el.textContent = tape[ti];
+
+
+      if (ti === tapePtr) {
+        el.classList.add('pointer');
+        if (flashDp) {
+          el.classList.remove('flash');
         void el.offsetWidth;
         el.classList.add('flash');
+        }
+      } else {
+        el.classList.remove('pointer');
       }
-    }
   }
 }
 
 function readInputChar() {
-  const val = inputBox.value;
-  if (val.length === 0) {
-    inputBox.classList.add('input-exhausted');
-    clearInterval(intervalHandle);
-    return null;
-  }
-  const ch = val.charCodeAt(0);
-  inputBox.value = val.slice(1);
-  return ch;
-}
+  const text = inputBox.value + ' ';
+  let html = '';
+  html += escHtml(text.slice(0, inputPtr));
+  html += `<span class="hl-current">${escHtml(text.slice(inputPtr, inputPtr + 1))}</span>`;
+  html += escHtml(text.slice(inputPtr + 1));
 
+  inputHL.innerHTML = html;
+  inputHL.scrollTop = programBox.scrollTop;
+
+  if (inputPtr >= inputBox.value.length) {
+    inputBox.classList.add('input-exhausted');
+    return 0;
+  } else {
+    inputBox.classList.remove('input-exhausted');
+    const ch = inputBox.value.charCodeAt(inputPtr);
+    inputPtr++;
+    return ch;
+  }
+}
 function stepOnce() {
   if (programPtr >= program.length) {
     endState();
@@ -288,21 +314,24 @@ function stepOnce() {
       if (tape[tapePtr] !== 0)
       programPtr = loopMap[programPtr];
       break;
-    } 
+    }
+    case '!': {
+      pause();
+      break;
+    }
   }
-  programPtr++;
-  steps++;
-  elSteps.textContent = steps;
+  programPtr += 1;
+  steps += instr.delta;
+  stepsLabel.textContent = steps;
   return true;
 }
 
 // ---- Playback controls ----
 function startRunning() {
-  btnStart.textContent = 'Stop';
-  btnStart.classList.add('running');
-  btnOptimise.classList.add('disabled');
-  programInput.disabled = true;
-  inputBox.disabled = true;
+  startButton.textContent = 'Stop';
+  startButton.classList.add('running');
+  OptimButton.classList.add('disabled');
+  programBox.disabled = true;
   intervalHandle = setInterval(() => { 
     if (!stepOnce()) 
       clearInterval(intervalHandle);
@@ -311,13 +340,12 @@ function startRunning() {
 
 function pause() {
   clearInterval(intervalHandle);
-  btnStart.textContent = 'Resume';
-  btnStart.classList.remove('running');
-  programInput.disabled = true;
-  inputBox.disabled = false;
+  startButton.textContent = 'Resume';
+  startButton.classList.remove('running');
+  programBox.disabled = true;
 }
-btnStart.addEventListener('click', () => {
-  if (btnStart.classList.contains("running")) {
+startButton.addEventListener('click', () => {
+  if (startButton.classList.contains("running")) {
     resetState();
     return;
   }
@@ -328,23 +356,22 @@ btnStart.addEventListener('click', () => {
   else startRunning();
 });
 
-btnStep.addEventListener('click', () => {
-  if (btnStart.classList.contains("running")) {
+stepButton.addEventListener('click', () => {
+  if (startButton.classList.contains("running")) {
     pause();
     return;
   }
   if (steps === 0)
     resetState();
   stepOnce();
-  btnStart.textContent = 'Resume';
-  btnStart.classList.remove('running');
-  btnOptimise.classList.add('disabled');
-  programInput.disabled = true;
-  inputBox.disabled = false;
+  startButton.textContent = 'Resume';
+  startButton.classList.remove('running');
+  OptimButton.classList.add('disabled');
+  programBox.disabled = true;
 });
 
-programInput.addEventListener('scroll', () => {
-  highlightEl.scrollTop = programInput.scrollTop;
+programBox.addEventListener('scroll', () => {
+  programHL.scrollTop = programBox.scrollTop;
 });
 
 resetState();

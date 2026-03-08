@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Erins Blog</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <!-- Menus -->
+  <div id="header-placeholder"></div>
+  <script>
+    fetch('/html/header.html')
+      .then(r => r.text())
+      .then(html => {
+        document.getElementById('header-placeholder').innerHTML = html;
+      });
+  </script>
+  <script src="/js/scripts.js"></script>
+
+  <!-- Page Content -->
+  <div class="content">
+    <div class="paragraph" style="--accent: orange">
+      <h2>MagMesh</h2>
+    </div>
+  </div>
+</body>
+</html>
