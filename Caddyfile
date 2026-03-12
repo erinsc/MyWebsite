@@ -1,0 +1,5 @@
+erinsc.net {
+    root * ./public
+    try_files {path} {path}.html {path}/index.html
+    file_server
+}
