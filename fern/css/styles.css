@@ -1,0 +1,146 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background: white;
+    color: #222;
+    font-size: 20px;
+}
+img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+p {
+  margin-bottom: 10px;
+}
+a {
+  color: green;
+}
+a:hover {
+  color: greenyellow;
+}
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    background: #222;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 1000;
+}
+.logo {
+    font-size: 36px;
+    font-weight: bold;
+}
+.burger {
+    font-size: 36px;
+    cursor: pointer;
+    user-select: none;
+}
+.burger:hover {
+    background: #333;
+}
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -250px; /* hidden initially */
+    width: 250px;
+    height: 100%;
+    background: #333;
+    padding-top: 60px;
+    transition: right 0.3s ease;
+    font-size: 30px;
+    z-index: 999;
+}
+.sidebar a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 5px 20px;
+}
+.sidebar a:hover {
+    background: #444;
+}
+.sidebar.active {
+    right: 0;
+}
+.hidden {
+    background: #444;
+    color: #444;
+}
+.hidden:hover {
+    color: #fff;
+}
+.content {
+    margin-top: 60px;
+    padding: 20px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.paragraph {
+    margin-left: -10px;
+    padding-left: 20px;
+    border-left: 4px solid var(--accent, lightgray);
+    margin-bottom: 2rem;
+}
+.row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr repeat(auto-fill, 300px);;
+  gap: 20px;
+  align-items: start;
+  
+}
+@media (max-width: 800px) {
+  .row {
+    grid-template-columns: 1fr;
+    grid-auto-flow: row;
+  }
+}
+textarea {
+    width: 100%;
+    resize: vertical;
+    min-height: 100px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 20px;
+    border: 2px solid black;
+    outline: none;
+    padding: 5px 10px;
+    
+}
+.buttons {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  max-width: 900px;
+  flex-wrap: wrap;
+}
+button {
+  font-size: 30px;
+  padding: 10px 30px;
+  border: 2px solid black;
+  cursor: pointer;
+}
+ul {
+    list-style-type: none;
+    padding-left: 40px;
+}
+.showcase {
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+    font-family: 'Share Tech Mono', monospace;
+    border: 2px solid greenyellow;
+    padding: 3px;
+}
