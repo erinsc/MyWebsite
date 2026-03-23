@@ -17,19 +17,70 @@ body{
     font-family: hurmit,Arial,sans-serif;
 }
 
+body {
+  margin: 0;
+}
+
 h1{
     color: var(--HIGHLIGHT-ONE);
+    font-size: 3rem;
 }
 
 footer{
+    margin-top: 2vh;
     font-size: 0.75rem;
 }
 
-/* #topBar{
-    width: 100vw;
-    height: 6vh;
-    background-color: var(--TEXT-COL);
-} */
+a{
+    display: inline-block;
+    color: var(--HIGHLIGHT-TWO);
+    text-decoration: none;
+    
+}
+
+a:hover{
+    transform: scale(1.05);
+}
+
+ul{
+    text-align: left;
+}
+abbr{
+    color: var(--HIGHLIGHT-ONE);
+    text-decoration: none;
+}
+
+.aboutMe{
+    width: 85%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#despair{
+    width: 1rem;
+    height: 1.2rem;
+}
+
+#welcomeMessage{
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+}
+
+
+.waterfall {
+  width: 48px;
+  height: 100%;
+  background-image: url('/assets/animated/waterfall.gif');
+  background-repeat: repeat-y;
+  background-size: 48px 192px;
+  border-color: white;
+  border-style: solid;
+  border-width: 0 0.2vw 0 0.2vw;
+}
+
+#rightWaterfall{
+    transform: scaleX(-1);
+}
 
 #page{
     display: flex;
@@ -49,19 +100,9 @@ footer{
     margin-top: 2vh;
     flex:3;
     text-align: center;
+    align-items: center;
 }
 
 .sideBar{
     background-color: var(--SIDEBAR-COL);
-}
-
-a{
-    display: inline-block;
-    color: var(--HIGHLIGHT-TWO);
-    text-decoration: none;
-    
-}
-
-a:hover{
-    transform: scale(1.05);
 }
