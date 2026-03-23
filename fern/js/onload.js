@@ -18,9 +18,8 @@
     const ukDate = new Date().toLocaleString("en-GB", { timeZone: "Europe/London", hour: "numeric", minute: "numeric", second: "numeric", hour12: false });
     const currentHour = new Date().getHours()
     const ukHour = parseInt(ukDate.split(":")[0])
-    console.log(ukHour)
     const hourOffset = (ukHour - currentHour) || 0
-    if (hourOffset < 0) { stringPadding = `${hourOffset} hours ahead of me` } else { stringPadding = `${-hourOffset} hours behind me` }
+    if (hourOffset >= 0) { stringPadding = `${hourOffset} hour(s) ahead of me` } else { stringPadding = `${-hourOffset} hour(s) behind me` }
     myTimeSpan.textContent = ukDate
     timeOffsetSpan.textContent = stringPadding
 }
