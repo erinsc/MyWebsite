@@ -1,12 +1,17 @@
 :root{
     --BACKGROUND-COL: #004225;
+    --SIDEBAR-COL: #1a142399;
     --TEXT-COL: #FFFFFF;
     --HIGHLIGHT-ONE: #9B7EDE;
     --HIGHLIGHT-TWO: #FE4A49;
 }
 
+* {
+   margin: 0px;
+   padding: 0px;
+}
+
 body{
-    text-align: center;
     background-color: var(--BACKGROUND-COL);
     color: var(--TEXT-COL);
     font-family: hurmit,Arial,sans-serif;
@@ -18,6 +23,36 @@ h1{
 
 footer{
     font-size: 0.75rem;
+}
+
+/* #topBar{
+    width: 100vw;
+    height: 6vh;
+    background-color: var(--TEXT-COL);
+} */
+
+#page{
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+#leftBar{
+    flex: 1;
+}
+
+#rightBar{
+    flex:0.7
+}
+
+#centreContent{
+    margin-top: 2vh;
+    flex:3;
+    text-align: center;
+}
+
+.sideBar{
+    background-color: var(--SIDEBAR-COL);
 }
 
 a{
