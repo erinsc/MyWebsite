@@ -11,10 +11,15 @@
    padding: 0px;
 }
 
+html{
+    min-height: 100vh;
+}
+
 body{
     background-color: var(--BACKGROUND-COL);
     color: var(--TEXT-COL);
     font-family: hurmit,Arial,sans-serif;
+    min-height: 100%;
 }
 
 body {
@@ -28,17 +33,18 @@ h1{
 
 footer{
     margin-top: 2vh;
+    margin-bottom: 2vh;
     font-size: 0.75rem;
 }
 
-a{
+.textLink{
     display: inline-block;
     color: var(--HIGHLIGHT-TWO);
     text-decoration: none;
     
 }
 
-a:hover{
+.textLink:hover{
     transform: scale(1.05);
 }
 
@@ -50,29 +56,94 @@ abbr{
     text-decoration: none;
 }
 
+@keyframes buttonWiggle {
+    0% {rotate: -10deg;}
+    20% {rotate:20deg;}
+    40% {rotate:-20deg;}
+    60% {rotate: 20deg;}
+    80% {rotate: -20deg;}
+    100% {rotate: 10deg;}
+    
+}
+
+.secretButtons{
+    display: inline-block;
+    margin-left: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+    color: var(--HIGHLIGHT-TWO);
+}
+
+.secretButtons:hover{
+    transform: scale(1.3);
+    animation: buttonWiggle;
+    animation-duration: 1s;
+}
+
 .aboutMe{
     width: 85%;
     margin: 0 auto;
     text-align: center;
 }
 
+#copyToKeyboard{
+    border: none;
+    background: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    color:var(--TEXT-COL)
+}
+
+#copyToKeyboard:hover{
+    opacity: 70%;
+}
+
+
+#stampGroup{
+    margin-top: 2vh;
+}
+
+.stampDiv{
+    margin-top: 1vh;
+    width: auto;
+}
+
+#stamps{
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    width: fit-content;
+}
+
+#stamps div{
+    padding-left: 5px;
+}
+
+
+
 #despair{
     width: 1rem;
     height: 1.2rem;
 }
 
+
+
+
 #welcomeMessage{
-    margin-top: 2vh;
-    margin-bottom: 2vh;
+    margin-top: 1.5vh;
+    margin-bottom: 1vh;
 }
 
 
 .waterfall {
-  width: 48px;
-  height: 100%;
+  width: 64px;
+  min-height: 100vh;
   background-image: url('/assets/animated/waterfall.gif');
   background-repeat: repeat-y;
-  background-size: 48px 192px;
+  background-size: 64px 256px;
   border-color: white;
   border-style: solid;
   border-width: 0 0.2vw 0 0.2vw;
@@ -84,7 +155,7 @@ abbr{
 
 #page{
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
     width: 100vw;
 }
 
@@ -97,7 +168,6 @@ abbr{
 }
 
 #centreContent{
-    margin-top: 2vh;
     flex:3;
     text-align: center;
     align-items: center;
