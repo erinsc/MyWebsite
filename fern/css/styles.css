@@ -61,6 +61,7 @@ footer{
 
 .textLink:hover{
     transform: scale(1.05);
+    cursor: pointer;
 }
 
 ul{
@@ -69,6 +70,10 @@ ul{
 abbr{
     color: var(--HIGHLIGHT-ONE);
     text-decoration: none;
+}
+
+h5{
+    margin-bottom: 5px;
 }
 
 @keyframes buttonWiggle {
@@ -113,6 +118,11 @@ abbr{
     width: auto;
 }
 
+#myStampDiv div{
+    width: fit-content;
+    margin: 0 auto;
+}
+
 #stamps{
     margin: 0 auto;
     display: grid;
@@ -120,11 +130,18 @@ abbr{
     width: fit-content;
 }
 
-#stamps div{
+#miscStamps{
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    width: fit-content;
+}
+
+.stampDiv div div{
     padding: 0 5px 0 5px;
 }
 
-#stamps div:hover{
+.stampDiv div div:hover{
     transform: scale(1.3);
 }
 
