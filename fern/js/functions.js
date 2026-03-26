@@ -50,3 +50,10 @@ function cancelSure(){
     window.alert("bye now");
     window.location.replace("http://www.google.com");
 }
+
+function updateTime(){
+    let myTimeSpan = document.getElementById("myTime")
+    const ukDate = new Date().toLocaleString("en-GB", { timeZone: "Europe/London", hour: "numeric", minute: "numeric", second: "numeric", hour12: false });
+    myTimeSpan.textContent = ukDate
+}
+setInterval(updateTime,1000)
