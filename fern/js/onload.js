@@ -34,4 +34,17 @@
     timeOffsetSpan.textContent = stringPadding
 }
 
+{
+    fetch('/html/navbar.html')
+    .then(r => r.text())
+    .then(html => {
+        document.getElementById('navbar-placeholder').innerHTML = html;
+    });
+}
+function updateTime(){
+    let myTimeSpan = document.getElementById("myTime")
+    const ukDate = new Date().toLocaleString("en-GB", { timeZone: "Europe/London", hour: "numeric", minute: "numeric", second: "numeric", hour12: false });
+    myTimeSpan.textContent = ukDate
+}
+
 document.querySelectorAll('a').forEach(link => { link.target = "_blank"; }); // im lazy
