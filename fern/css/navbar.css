@@ -1,12 +1,30 @@
+:root{
+    --BACKGROUND-COL: #004225;
+    --SIDEBAR-COL: #1a142399;
+    --TEXT-COL: #FFFFFF;
+    --HIGHLIGHT-ONE: #9B7EDE;
+    --HIGHLIGHT-TWO: #FE4A49;
+}
+
 #navBar{
-    background-color: white;
+    top: 0;
+    background-color: black;
     width: 100%;
-    height: 4vh;
+    height: 2rem;
     display: flex;
     align-items: center;
     justify-content: space-around;
 }
 
-.navBarButton{
-    color: black;
+.navBarButton a{
+    color:white;
+    text-decoration:none;
+    font-weight: bold;
+}
+
+.navBarButton:hover,
+.navBarButton a:hover{
+    transform: scale(1.3);
+    color: var(--HIGHLIGHT-TWO);
+    transition: 0.2s;
 }
