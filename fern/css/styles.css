@@ -20,6 +20,7 @@ body{
     color: var(--TEXT-COL);
     font-family: hurmit,Arial,sans-serif;
     min-height: 100%;
+    font-size: 1vw;
 }
 
 button{
@@ -43,13 +44,13 @@ body {
 
 h1{
     color: var(--HIGHLIGHT-ONE);
-    font-size: 3rem;
+    font-size: 3vw;
 }
 
 footer{
     margin-top: 2vh;
     margin-bottom: 2vh;
-    font-size: 0.75rem;
+    font-size: 0.75vw;
 }
 
 .textLink{
@@ -147,8 +148,8 @@ h5{
 
 
 #despair{
-    width: 1rem;
-    height: 1.2rem;
+    width: 1vw;
+    height: 1.2vw;
 }
 
 
