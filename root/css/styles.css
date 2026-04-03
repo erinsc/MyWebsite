@@ -37,8 +37,13 @@ a:hover {
     padding: 0 20px;
     z-index: 1000;
 }
-.logo {
+.logo a {
     font-size: 36px;
+    font-weight: bold;
+
+    display: block;
+    color: white;
+    text-decoration: none;
     font-weight: bold;
 }
 .burger {
@@ -97,10 +102,10 @@ a:hover {
 .row {
   display: grid;
   grid-auto-flow: column;
-  grid-template-columns: 1fr repeat(auto-fill, 300px);;
+  grid-template-columns: 1fr repeat(auto-fill, 300px);
   gap: 20px;
   align-items: start;
-  
+  padding-bottom: 20px;
 }
 @media (max-width: 800px) {
   .row {

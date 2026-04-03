@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stuff Central</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <!-- Menus -->
+  <div id="header-placeholder"></div>
+  <script>
+    fetch('/html/header.html')
+      .then(r => r.text())
+      .then(html => {
+        document.getElementById('header-placeholder').innerHTML = html;
+      });
+  </script>
+  <script src="/js/scripts.js"></script>
+
+  <!-- Page Content -->
+  <div class="content">
+    <div class="paragraph" style="--accent: orange">
+      <h2>Seximal</h2>
+      <div class="row">
+        <div>
+        <p>Ill add stuff here later, for now go to <a href="https://www.seximal.net/">seximal.net</a> cause that place is both awesome and cool and also has the cool thing on there! for now enjoy my custom digits that i made.</p>
+        <p>The idea is this: The normal decimal digits can be displayed on 7 segments in two squares. The digits need some warping but thats fine enough, theyre still very readable. but 7 segments is wayy to many for seximal! i wanted 4! so i did them! again you need some warping and changing but i like that, it gives it character!</p>
+      </div>
+      <img src="/images/nerd/seximal2.png" alt="6 custom symbols for the seximal base">
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
