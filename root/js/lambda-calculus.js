@@ -22,11 +22,11 @@ canvas.addEventListener('click', (e) => {
 function loop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    A.updateAbstraction(A.root, V.new());
-    A.drawAbstraction(A.root, ctx);
+    A.update();
+    A.draw(ctx);
     requestAnimationFrame(loop);
 }
 
-A.initRoot(canvas);
+A.init(canvas);
 loop();
 

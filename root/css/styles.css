@@ -141,6 +141,9 @@ ul {
     list-style-type: none;
     padding-left: 40px;
 }
+ol {
+    padding-left: 40px;
+}
 .showcase {
     color: black;
     font-weight: bold;

@@ -27,6 +27,10 @@ export default {
   },
   normalized(a) {
     let d = this.len(a);
+    if (d === 0) {
+      return this.new(1, 0);
+    }
+
     return this.scale(a, 1/d);
   },
   normal(a) {
@@ -34,5 +38,9 @@ export default {
   },
   dot(a, b) {
     return a.x * b.x + a.y * b.y;
+  },
+  // Projects vec onto base (base has to be normalized)
+  project(vec, base) {
+    return this.scale(base, this.dot(vec, base));
   }
 }
